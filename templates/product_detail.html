@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>{{ product.name }}</h2>
+<div class="product-detail">
+  <img src="{{ product.image_url }}" alt="{{ product.name }}">
+  <div>
+    <p>{{ product.description }}</p>
+    <p class="price">{{ '%.2f'|format(product.price) }} د.ك</p>
+
+    <form action="{{ url_for('add_to_cart', pid=product.id) }}" method="post">
+      {% if product.sizes %}
+        <label>المقاس</label>
+        <div class="chip-group">
+          {% for s in product.sizes %}
+            <label class="chip">
+              <input type="radio" name="size" value="{{ s }}"> <span>{{ s }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if product.colors %}
+        <label>اللون</label>
+        <select name="color">
+          <option value="">اختر اللون</option>
+          {% for c in product.colors %}<option>{{ c }}</option>{% endfor %}
+        </select>
+      {% endif %}
+
+      <label class="custom-size-toggle">
+        <input type="checkbox" name="use_custom_size" id="use_custom_size">
+        <span>مقاس مخصص (خياطة حسب الطلب)</span>
+      </label>
+
+      <div id="custom_fields" style="display:none">
+        <div class="grid2">
+          <div>
+            <label>الصدر (سم)</label>
+            <input type="number" name="bust" min="0" step="0.1">
+          </div>
+          <div>
+            <label>الخصر (سم)</label>
+            <input type="number" name="waist" min="0" step="0.1">
+          </div>
+          <div>
+            <label>الأرداف (سم)</label>
+            <input type="number" name="hips" min="0" step="0.1">
+          </div>
+          <div>
+            <label>الطول (سم)</label>
+            <input type="number" name="height" min="0" step="0.1">
+          </div>
+        </div>
+        <label>ملاحظات إضافية</label>
+        <textarea name="size_notes" rows="2" placeholder="تفاصيل إضافية للقياس"></textarea>
+      </div>
+
+      <label>الكمية</label>
+      <input type="number" name="quantity" value="1" min="1">
+
+      <button type="submit" class="btn">أضف إلى السلة</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const chk = document.getElementById('use_custom_size');
+  const box = document.getElementById('custom_fields');
+  chk.addEventListener('change', () => {
+    box.style.display = chk.checked ? 'block' : 'none';
+    if (chk.checked) {
+      document.querySelectorAll('input[name="size"]').forEach(r => r.checked=false);
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "فستان فيكتوري مطرّز",
+    "price": 35.0,
+    "description": "تفاصيل دانتيل مع قصّة كلاسيكية.",
+    "image_url": "https://picsum.photos/400/520?1",
+    "stock": 10,
+    "active": true,
+    "colors": [
+      "أسود",
+      "أبيض",
+      "كحلي"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "كورسيه كلاسيكي",
+    "price": 22.5,
+    "description": "كورسيه خامة متينة وخياطة أنيقة.",
+    "image_url": "https://picsum.photos/400/520?2",
+    "stock": 8,
+    "active": true,
+    "colors": [
+      "بيج",
+      "أسود",
+      "عنابي"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ]
+  }
+]

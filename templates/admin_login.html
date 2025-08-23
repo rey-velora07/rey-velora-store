@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>تسجيل دخول المصمّمة</h2>
+<form method="post" class="form">
+  <label>بريدك المخوّل</label>
+  <input name="email" type="email" placeholder="أدخلي بريدك" required>
+
+  <label>كلمة السر</label>
+  <input name="password" type="password" placeholder="أدخلي كلمة السر" required>
+
+  <button type="submit" class="btn">دخول</button>
+</form>
+<p class="hint">المخول حالياً: {{ admin_email }}</p>
+{% endblock %}

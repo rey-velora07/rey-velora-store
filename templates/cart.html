@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>السلة</h2>
+
+{% if cart_items|length == 0 %}
+  <p>السلة فارغة.</p>
+{% else %}
+  <table class="table">
+    <tr>
+      <th>المنتج</th><th>مقاس/لون</th><th>كمية</th><th>السعر</th><th></th>
+    </tr>
+    {% for item in cart_items %}
+    <tr>
+      <td>{{ item.name }}</td>
+      <td>
+        {% if item.custom_size %}
+          <details>
+            <summary>مقاس مخصص</summary>
+            <div class="mini">
+              {% if item.custom_size.bust %}<div>الصدر: {{ item.custom_size.bust }} سم</div>{% endif %}
+              {% if item.custom_size.waist %}<div>الخصر: {{ item.custom_size.waist }} سم</div>{% endif %}
+              {% if item.custom_size.hips %}<div>الأرداف: {{ item.custom_size.hips }} سم</div>{% endif %}
+              {% if item.custom_size.height %}<div>الطول: {{ item.custom_size.height }} سم</div>{% endif %}
+              {% if item.custom_size.notes %}<div>ملاحظات: {{ item.custom_size.notes }}</div>{% endif %}
+              {% if item.color %}<div>اللون: {{ item.color }}</div>{% endif %}
+            </div>
+          </details>
+        {% else %}
+          {{ item.size or '-' }}{% if item.color %} / {{ item.color }}{% endif %}
+        {% endif %}
+      </td>
+      <td>
+        <form action="{{ url_for('update_cart', index=loop.index0) }}" method="post" style="display:inline">
+          <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width:70px">
+          <button type="submit" class="btn small">تحديث</button>
+        </form>
+      </td>
+      <td>{{ '%.2f'|format(item.price * item.quantity) }} د.ك</td>
+      <td><a class="btn danger small" href="{{ url_for('remove_from_cart', index=loop.index0) }}">حذف</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <p class="total">الإجمالي: <strong>{{ '%.2f'|format(total) }} د.ك</strong></p>
+  <a class="btn" href="{{ url_for('checkout') }}">المتابعة للدفع</a>
+{% endif %}
+{% endblock %}

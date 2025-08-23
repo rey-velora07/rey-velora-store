@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title or 'Rey Velora' }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><a href="/">Rey Velora</a></div>
+    <nav>
+      <a href="/">الرئيسية</a>
+      <a href="/cart">السلة</a>
+      {% if session.get('user_email') %}
+        <a href="/admin">لوحة التحكم</a>
+        <a href="/admin/logout">خروج</a>
+      {% else %}
+        <a href="/admin/login">تسجيل دخول المصمّمة</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flashes">
+          {% for cat,msg in messages %}
+            <div class="flash {{ cat }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">© 2025 Rey Velora</footer>
+</body>
+</html>

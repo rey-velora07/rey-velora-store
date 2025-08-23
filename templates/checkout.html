@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>الدفع / تأكيد الطلب</h2>
+
+{% if cart_items|length == 0 %}
+  <p>سلتك فارغة.</p>
+{% else %}
+  <form method="post" class="form">
+    <label>الاسم الكامل</label>
+    <input name="name" required>
+
+    <label>البريد الإلكتروني</label>
+    <input name="email" type="email">
+
+    <label>الهاتف</label>
+    <input name="phone" type="tel">
+
+    <label>العنوان</label>
+    <textarea name="address" required></textarea>
+
+    <label>ملاحظات</label>
+    <textarea name="note" placeholder="معلومات إضافية اختيارية"></textarea>
+
+    <label>مدة التوصيل المتوقعة (أيام)</label>
+    <input name="eta_days" type="number" min="1" value="20">
+
+    <p class="total">الإجمالي: <strong>{{ '%.2f'|format(total) }} د.ك</strong></p>
+    <button type="submit" class="btn">تأكيد الطلب (بدون دفع)</button>
+  </form>
+{% endif %}
+{% endblock %}
